@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Website</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script>
+      function updateFavicon() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 16;
+        canvas.height = 16;
+        const context = canvas.getContext('2d');
+        context.fillStyle = '#ff9f2f'; // Set background color to #ff9f2f
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.font = 'bold 12px sans-serif';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillStyle = '#cb420a'; // Set drop shadow color to #cb420a
+        context.fillText(new Date().getMinutes(), 9, 10); // Add drop shadow effect
+        context.fillStyle = '#fff'; // Set text color to white
+        context.fillText(new Date().getMinutes(), 8, 9);
+        const faviconLink = document.createElement('link');
+        faviconLink.rel = 'icon';
+        faviconLink.type = 'image/x-icon';
+        faviconLink.href = canvas.toDataURL();
+        const head = document.getElementsByTagName('head')[0];
+        const oldLink = document.querySelector('link[rel="icon"]');
+        if (oldLink) {
+          head.removeChild(oldLink);
+        }
+        head.appendChild(faviconLink);
+      }
+      updateFavicon();
+      setInterval(updateFavicon, 60000); // update every minute
+    </script>
+  </head>
+  <body onload="startTime()">
+    <div id="txt"></div>
+    <script>
+      function startTime() {
+        const today = new Date();
+        let h = today.getHours();
+        let m = today.getMinutes();
+        let s = today.getSeconds();
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12;
+        h = h ? h : 12;
+        m = checkTime(m);
+        s = checkTime(s);
+        document.title = h + ":" + m + ":" + s + " " + ampm;
+        setTimeout(startTime, 1000);
+      }
+      function checkTime(i) {
+        if (i < 10) {
+          i = "0" + i;
+        }  // add zero in front of numbers < 10
+        return i;
+      }
+    </script>
+  </body>
+</html>
