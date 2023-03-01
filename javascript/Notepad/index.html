@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Notepad</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+      textarea {
+        resize: none;
+        margin: auto;
+        display: block;
+        text-align: justify;
+        overflow: hidden;
+      }
+      /* Add some styles for the full-screen mode */
+      textarea.full-screen {
+        font-family: "Chivo Mono", sans-serif;
+        color: #ffffff;
+        width: 98%;
+        height: 98%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        background-color: #23211f;
+        /* Add the border around the background */
+        border: 18px solid #3d3935;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="note" class="full-screen"></textarea>
+
+    <!-- Add the JavaScript code here -->
+    <script>
+      const textarea = document.getElementById('note');
+      const fullScreenButton = document.getElementById('full-screen');
+
+      fullScreenButton.addEventListener('click', function() {
+        // Toggle the full-screen class on the textarea
+        textarea.classList.toggle('full-screen');
+      });
+      
+      // Save the notes to local storage when the user leaves the page
+      window.addEventListener('beforeunload', function() {
+        localStorage.setItem('notes', textarea.value);
+      });
+
+      // Retrieve the notes from local storage when the page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        textarea.value = localStorage.getItem('notes');
+      });
+    </script>
+  </body>
+</html>
